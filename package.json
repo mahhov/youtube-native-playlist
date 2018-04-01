@@ -1,0 +1,20 @@
+{
+  "name": "local-yt",
+  "version": "0.0.1",
+  "description": "online & offline youtube streaming",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "mahhov",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bb-better-binding": "^0.1.2",
+    "bu-better-underscore": "^0.1.0",
+    "ytdl-core": "^0.20.2"
+  },
+  "devDependencies": {
+    "electron": "^1.8.4"
+  }
+}
