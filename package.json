@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "bb-better-binding": "^0.1.2",
+    "bb-better-binding": "^0.1.6",
+    "bs-better-stream": "^0.2.3",
     "bu-better-underscore": "^0.1.0",
     "ytdl-core": "^0.20.2"
   },
