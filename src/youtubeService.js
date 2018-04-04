@@ -8,10 +8,16 @@ let streamPlaylistVideos = id => {
     let responses = pages
         .map(page => getPlaylistPage(id, page))
         .wait();
-    responses.pluck('nextPageToken').filter(nextPage => nextPage).to(pages);
-    let snippets = responses.pluck('items').flatten().pluck('snippet');
+    responses
+        .pluck('nextPageToken')
+        .filter(nextPage => nextPage)
+        .to(pages);
     pages.write('');
-    return snippets;
+    return responses
+        .pluck('items')
+        .flatten()
+        .pluck('snippet')
+        .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title}));
 };
 
 let getPlaylistPage = (id, page) =>
