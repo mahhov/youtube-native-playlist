@@ -1,3 +1,5 @@
+const ytdl = require('ytdl-core');
+const fs = require('fs');
 const axios = require('axios');
 const _ = require('bs-better-stream');
 const apiUrl = 'https://www.googleapis.com/youtube/v3';
@@ -24,4 +26,38 @@ let getPlaylistPage = (id, page) =>
     axios.get(`${apiUrl}/playlistItems?part=snippet&maxResults=50&pageToken=${page}&playlistId=${id}&key=${apiKey}`)
         .then(response => response.data);
 
-module.exports = {streamPlaylistVideos};
+let downloadVideo = video => {
+    let stream = ytdl(video.id, {quality: 'lowest'});
+    stream.pipe(fs.createWriteStream(`downloads/${video.id}.webm`));
+
+    video.status = 'preparing download';
+
+    let sizeFormat = size => `${(size / 1024 / 1024).toFixed(2)} MB`;
+
+    let timeFormat = time => `${time.toFixed(2)} seconds`;
+
+    let startTime;
+    stream.once('response', () => {
+        startTime = Date.now();
+        video.status = 'beginning download';
+    });
+
+    stream.on('progress', (chunkLength, downloaded, total) => {
+        let floatDownloaded = downloaded / total;
+        let secondsPassed = (Date.now() - startTime) / 1000;
+
+        let percent = `${(floatDownloaded * 100).toFixed(2)}%`;
+        let size = `${sizeFormat(total)}`;
+        let time = `${timeFormat(secondsPassed / floatDownloaded - secondsPassed)} remaining`;
+
+        video.status = `${percent} (${time}) [${size}]`;
+    });
+
+    stream.on('end', () => {
+        let secondsPassed = (Date.now() - startTime) / 1000;
+        let time = `${timeFormat(secondsPassed)}`;
+        video.status = `done downloading (${time})`;
+    });
+};
+
+module.exports = {streamPlaylistVideos, downloadVideo};

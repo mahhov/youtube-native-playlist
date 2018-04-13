@@ -1,8 +1,12 @@
 <h4>Loaded $s{videos.length} videos</h4>
 
-<div bind-for="video in videos" onclick="yy()">
-    $s{video.title} - $s{video.id}
+<div bind-for="video in videos">
+    <div onclick="$f;{download(video.id)}">
+        <div>$s{video.title} - $s{video.id}</div>
+        <div>- $s{video.status} -</div>
+    </div>
 </div>
+
 
 <script>
     require('./controller');
