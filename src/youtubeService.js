@@ -1,18 +1,20 @@
 const ytdl = require('ytdl-core');
 const fs = require('fs');
 const axios = require('axios');
-const _ = require('bs-better-stream');
+const $tream = require('bs-better-stream');
+const promiseCreator = require('./promiseCreator');
 const apiUrl = 'https://www.googleapis.com/youtube/v3';
 const apiKey = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
 
 let streamPlaylistVideos = id => {
-    let pages = _();
+    let pages = $tream();
     let responses = pages
         .map(page => getPlaylistPage(id, page))
         .wait();
     responses
         .pluck('nextPageToken')
         .filter(nextPage => nextPage)
+        .filterCount(4)
         .to(pages);
     pages.write('');
     return responses
@@ -27,6 +29,10 @@ let getPlaylistPage = (id, page) =>
         .then(response => response.data);
 
 let downloadVideo = video => {
+    let promiseWrap = promiseCreator();
+
+    fs.existsSync('downloads') || fs.mkdirSync('downloads');
+
     let stream = ytdl(video.id, {quality: 'lowest'});
     stream.pipe(fs.createWriteStream(`downloads/${video.id}.webm`));
 
@@ -57,7 +63,10 @@ let downloadVideo = video => {
         let secondsPassed = (Date.now() - startTime) / 1000;
         let time = `${timeFormat(secondsPassed)}`;
         video.status = `done downloading (${time})`;
+        promiseWrap.resolve();
     });
+
+    return promiseWrap.promise;
 };
 
 module.exports = {streamPlaylistVideos, downloadVideo};

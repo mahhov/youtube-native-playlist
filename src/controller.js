@@ -4,18 +4,27 @@ const yt = require('./youtubeService');
 window.source = source;
 
 source.downloadVideo = video => {
-    yt.downloadVideo(video);
+    try {
+        return yt.downloadVideo(video);
+    } catch (e) {
+    }
 };
 
 let init = () => {
     source.videos = [];
-    yt.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2')
+    let throttled = yt.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2')
         .map(video => {
             source.videos.push(video);
             return source.videos[source.videos.length - 1];
-        })
-        // .filterCount(10)
+        }).throttle(100);
+
+    throttled.stream
         .map(source.downloadVideo)
+        .wait()
+        .each(() => {
+            throttled.next();
+        });
+
     // .wait()
     // .map(info =>
     //     ytdl.filterFormats(info.formats, 'audioonly'))
