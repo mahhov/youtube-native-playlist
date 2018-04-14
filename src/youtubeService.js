@@ -1,20 +1,16 @@
-const ytdl = require('ytdl-core');
-const fs = require('fs');
-const axios = require('axios');
+const ytRepo = require('./youtubeRepository');
 const $tream = require('bs-better-stream');
 const promiseCreator = require('./promiseCreator');
-const apiUrl = 'https://www.googleapis.com/youtube/v3';
-const apiKey = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
 
 let streamPlaylistVideos = id => {
     let pages = $tream();
     let responses = pages
-        .map(page => getPlaylistPage(id, page))
+        .map(page => ytRepo.getPlaylistPage(id, page))
         .wait();
     responses
         .pluck('nextPageToken')
         .filter(nextPage => nextPage)
-        .filterCount(4)
+        .filterCount(1)
         .to(pages);
     pages.write('');
     return responses
@@ -24,49 +20,53 @@ let streamPlaylistVideos = id => {
         .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title}));
 };
 
-let getPlaylistPage = (id, page) =>
-    axios.get(`${apiUrl}/playlistItems?part=snippet&maxResults=50&pageToken=${page}&playlistId=${id}&key=${apiKey}`)
-        .then(response => response.data);
-
 let downloadVideo = video => {
-    let promiseWrap = promiseCreator();
+    try {
+        let promiseWrap = promiseCreator();
 
-    fs.existsSync('downloads') || fs.mkdirSync('downloads');
+        fs.existsSync('downloads') || fs.mkdirSync('downloads');
 
-    let stream = ytdl(video.id, {quality: 'lowest'});
-    stream.pipe(fs.createWriteStream(`downloads/${video.id}.webm`));
+        let stream = ytRepo.getVideoStream(video.id);
+        stream.pipe(fs.createWriteStream(`downloads/${video.id}.webm`));
 
-    video.status = 'preparing download';
+        video.status = 'preparing download';
 
-    let sizeFormat = size => `${(size / 1024 / 1024).toFixed(2)} MB`;
+        let sizeFormat = size => `${(size / 1024 / 1024).toFixed(2)} MB`;
 
-    let timeFormat = time => `${time.toFixed(2)} seconds`;
+        let timeFormat = time => `${time.toFixed(2)} seconds`;
 
-    let startTime;
-    stream.once('response', () => {
-        startTime = Date.now();
-        video.status = 'beginning download';
-    });
+        let startTime;
+        stream.once('response', () => {
+            startTime = Date.now();
+            video.status = 'beginning download';
+        });
 
-    stream.on('progress', (chunkLength, downloaded, total) => {
-        let floatDownloaded = downloaded / total;
-        let secondsPassed = (Date.now() - startTime) / 1000;
+        // todo handling error
+        stream.on('error', err => {
+            console.log('3rr', err);
+        });
 
-        let percent = `${(floatDownloaded * 100).toFixed(2)}%`;
-        let size = `${sizeFormat(total)}`;
-        let time = `${timeFormat(secondsPassed / floatDownloaded - secondsPassed)} remaining`;
+        stream.on('progress', (chunkLength, downloaded, total) => {
+            let floatDownloaded = downloaded / total;
+            let secondsPassed = (Date.now() - startTime) / 1000;
 
-        video.status = `${percent} (${time}) [${size}]`;
-    });
+            let percent = `${(floatDownloaded * 100).toFixed(2)}%`;
+            let size = `${sizeFormat(total)}`;
+            let time = `${timeFormat(secondsPassed / floatDownloaded - secondsPassed)} remaining`;
 
-    stream.on('end', () => {
-        let secondsPassed = (Date.now() - startTime) / 1000;
-        let time = `${timeFormat(secondsPassed)}`;
-        video.status = `done downloading (${time})`;
-        promiseWrap.resolve();
-    });
+            video.status = `${percent} (${time}) [${size}]`;
+        });
 
-    return promiseWrap.promise;
+        stream.on('end', () => {
+            let secondsPassed = (Date.now() - startTime) / 1000;
+            let time = `${timeFormat(secondsPassed)}`;
+            video.status = `done downloading (${time})`;
+            promiseWrap.resolve();
+        });
+
+        return promiseWrap.promise;
+    } catch (e) {
+    }
 };
 
 module.exports = {streamPlaylistVideos, downloadVideo};

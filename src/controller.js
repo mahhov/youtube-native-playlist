@@ -1,29 +1,24 @@
 const source = require('bb-better-binding')(__dirname, document);
-const yt = require('./youtubeService');
+const ytService = require('./youtubeService');
 
 window.source = source;
 
 source.downloadVideo = video => {
-    try {
-        return yt.downloadVideo(video);
-    } catch (e) {
-    }
+
 };
 
 let init = () => {
     source.videos = [];
-    let throttled = yt.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2')
+    let throttled = ytService.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2') // todo paramaterize
         .map(video => {
             source.videos.push(video);
             return source.videos[source.videos.length - 1];
-        }).throttle(100);
+        }).throttle(10);
 
-    throttled.stream
-        .map(source.downloadVideo)
-        .wait()
-        .each(() => {
-            throttled.next();
-        });
+    // throttled.stream
+    //     .map(ytService.downloadVideo)
+    //     .wait()
+    //     .each(throttled.nextOne);
 
     // .wait()
     // .map(info =>

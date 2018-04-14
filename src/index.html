@@ -1,4 +1,8 @@
-<h4>Loaded $s{videos.length} videos</h4>
+<h4>Loaded $s{videos.length} of $s{videoCount} videos</h4>
+
+<button>download</button>
+
+<hr>
 
 <div bind-for="video in videos">
     <div onclick="$f;{download(video.id)}">
@@ -6,7 +10,6 @@
         <div>- $s{video.status} -</div>
     </div>
 </div>
-
 
 <script>
     require('./controller');
