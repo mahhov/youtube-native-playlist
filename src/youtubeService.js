@@ -36,12 +36,10 @@ let downloadVideo = video => {
         stream.pipe(fs.createWriteStream(`downloads/${video.id}.webm`));
 
         video.status = 'preparing download';
-
         let sizeFormat = size => `${(size / 1024 / 1024).toFixed(2)} MB`;
-
         let timeFormat = time => `${time.toFixed(2)} seconds`;
-
         let startTime;
+
         stream.once('response', () => {
             startTime = Date.now();
             video.status = 'beginning download';
