@@ -6,22 +6,17 @@ let walk = dir => {
 
     dirs.write(dir);
 
-    let reads = dirs
-        .map(dir =>
-            fileRepo.readDir(dir).then(files => ({dir, files})))
-        .wait()
-        .flatMap(({dir, files}) => {
-            return files.map(file => ({dir, file}));
-        });
-
-    let readsIfDir = reads
-        .map(({dir, file}) =>
-            fileRepo.isDir(dir, file).then(isDir => ({dir, file, isDir})))
-        .wait()
-        .if(({dir, file, isDir}) => isDir);
+    let readsIfDir = dirs
+        .wrap('dir')
+        .set('files', ({dir}) => fileRepo.readDir(dir))
+        .waitOn('files')
+        .flattenOn('files', 'file')
+        .set('isDir', ({dir, file}) => fileRepo.isDir(dir, file))
+        .waitOn('isDir')
+        .if(({isDir}) => isDir);
 
     readsIfDir.then
-        .map(({dir, file, isDir}) => fileRepo.getPath(dir, file))
+        .map(({dir, file}) => fileRepo.getPath(dir, file))
         .to(dirs);
 
     return readsIfDir.else

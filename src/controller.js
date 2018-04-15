@@ -20,25 +20,27 @@ let init = () => {
             return source.videos[source.videos.length - 1];
         }).throttle(10);
 
-    // throttled.stream
-    //     .map(ytService.downloadVideo)
-    //     .wait()
-    //     .each(throttled.nextOne);
-
-    // .wait()
-    // .map(info =>
-    //     ytdl.filterFormats(info.formats, 'audioonly'))
-    // .
 };
 
 init();
 
 // todo
+// list which one's downloaded
+// filter options by downlaoded, undownloaded, all
 // on click video row -> donwload that one
 // on click all button -> download all
 // catagorize downloads into directories
 // play
 
+// throttled.stream
+//     .map(ytService.downloadVideo)
+//     .wait()
+//     .each(throttled.nextOne);
+
+// .wait()
+// .map(info =>
+//     ytdl.filterFormats(info.formats, 'audioonly'))
+// .
 
 // let videoId = 'gciHaTI4FIs';
 // source.download(videoId);
