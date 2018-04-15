@@ -8,6 +8,11 @@ source.downloadVideo = video => {
 };
 
 let init = () => {
+    ytService.playlistLength('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2')
+        .each(length => {
+            source.videoCount = length;
+        });
+
     source.videos = [];
     let throttled = ytService.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2') // todo paramaterize
         .map(video => {

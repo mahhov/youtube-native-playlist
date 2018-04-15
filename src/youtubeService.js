@@ -2,6 +2,12 @@ const ytRepo = require('./youtubeRepository');
 const $tream = require('bs-better-stream');
 const promiseCreator = require('./promiseCreator');
 
+let playlistLength = id => {
+    let firstPage = $tream();
+    firstPage.writePromise(ytRepo.getPlaylistPage(id, ''));
+    return firstPage.pluck('pageInfo').pluck('totalResults');
+};
+
 let streamPlaylistVideos = id => {
     let pages = $tream();
     let responses = pages
@@ -69,4 +75,4 @@ let downloadVideo = video => {
     }
 };
 
-module.exports = {streamPlaylistVideos, downloadVideo};
+module.exports = {playlistLength, streamPlaylistVideos, downloadVideo};
