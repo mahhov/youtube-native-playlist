@@ -12,7 +12,7 @@
     "axios": "^0.18.0",
     "bb-better-binding": "^0.3.3",
     "bm-better-memoization": "0.0.1",
-    "bs-better-stream": "^0.4.0",
+    "bs-better-stream": "^0.4.2",
     "ytdl-core": "^0.20.2"
   },
   "devDependencies": {
