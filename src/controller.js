@@ -1,28 +1,30 @@
 const source = require('bb-better-binding')(__dirname, document);
+const $tream = require('bs-better-stream');
 const ytService = require('./youtubeService');
+const fileService = require('./fileService');
 
 window.source = source;
 
-source.downloadVideo = video => {
+let init = (playlistId, downloadDirectory) => {
+    ytService.playlistLength(playlistId)
+        .each(length => source.videoCount = length);
 
-};
+    source.downloads = $tream();
+    fileService.walk(downloadDirectory)
+        .to(source.downloads);
 
-let init = () => {
-    ytService.playlistLength('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2')
-        .each(length => {
-            source.videoCount = length;
+    source.videos = $tream();
+    ytService.streamPlaylistVideos(playlistId)
+        .to(source.videos);
+
+    source.videos
+        .productX(source.downloads, ({id}) => id, downloaded => downloaded.replace('.webm', ''), video => {
+            video.downloaded = true;
+            video.status = 'Already Downloaded';
         });
-
-    source.videos = [];
-    let throttled = ytService.streamPlaylistVideos('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2') // todo paramaterize
-        .map(video => {
-            source.videos.push(video);
-            return source.videos[source.videos.length - 1];
-        }).throttle(10);
-
 };
 
-init();
+init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
 // list which one's downloaded

@@ -1,15 +1,20 @@
-<h4>Loaded $s{videos.length} of $s{videoCount} videos</h4>
+<h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
 
-<button>download</button>
+<!--<button onclick="$f{downloadAll}">download</button>-->
 
 <hr>
 
-<div bind-for="video in videos">
-    <div onclick="$f;{download(video.id)}">
-        <div>$s{video.title} - $s{video.id}</div>
-        <div>- $s{video.status} -</div>
-    </div>
+<div class="section" bind-for="video in videos.outValues">
+    <div>$s{video.title} - $s{video.id}</div>
+    <div>$s{video.status}</div>
+    <button onclick="$f;{downloadAll}" bind-if="video.downloaded">download</button>
 </div>
+
+<style>
+    .section {
+        margin-bottom: 20px;
+    }
+</style>
 
 <script>
     require('./controller');
