@@ -6,8 +6,9 @@
 
 <div class="section" bind-for="video in videos.outValues">
     <div>$s{video.title} - $s{video.id}</div>
-    <div>$s{video.status}</div>
-    <button onclick="$f;{downloadAll}" bind-if="video.downloaded">download</button>
+    <div bind-if="video.downloaded">Already Downloaded</div>
+    <div bind="video.status"></div>
+    <button bind-if="$e{showDownload(video.status)}" onclick="${download(video)}">download</button>
 </div>
 
 <style>

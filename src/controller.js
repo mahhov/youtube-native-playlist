@@ -5,6 +5,13 @@ const fileService = require('./fileService');
 
 window.source = source;
 
+source.showDownload = status => !status;
+
+source.download = video => {
+    video.status = 'download pending';
+    ytService.downloadVideo(video);
+};
+
 let init = (playlistId, downloadDirectory) => {
     ytService.playlistLength(playlistId)
         .each(length => source.videoCount = length);
@@ -19,8 +26,7 @@ let init = (playlistId, downloadDirectory) => {
 
     source.videos
         .productX(source.downloads, ({id}) => id, downloaded => downloaded.replace('.webm', ''), video => {
-            video.downloaded = true;
-            video.status = 'Already Downloaded';
+            video.status = 'already downloaded';
         });
 };
 

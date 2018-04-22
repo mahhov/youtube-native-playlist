@@ -1,3 +1,4 @@
+const fs = require('fs');
 const ytRepo = require('./youtubeRepository');
 const $tream = require('bs-better-stream');
 const promiseCreator = require('./promiseCreator');
@@ -70,6 +71,8 @@ let downloadVideo = video => {
 
         return promiseWrap.promise;
     } catch (e) {
+        video.status = 'failed to download';
+        console.log('video not downloaded', video.id, video.title, e);
     }
 };
 
