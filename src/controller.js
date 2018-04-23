@@ -28,7 +28,9 @@ source.download = video => {
 };
 
 source.downloadAll = () =>
-    source.videos.each(source.download); // todo use filtered view & what about already downloaded
+    source.videos
+        .filter(video => video.state === State.UNDOWNLOADED)
+        .each(source.download);
 
 let init = (playlistId, downloadDirectory) => {
     ytService.playlistLength(playlistId)
@@ -49,7 +51,7 @@ let init = (playlistId, downloadDirectory) => {
             video.state = State.DOWNLOADED;
         });
 
-    source.setFilterAll(); // todo update radio button default
+    source.setFilterAll();
 };
 
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
@@ -63,6 +65,7 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // show num pending downloaded summary of statuss
 // cancel download & download all
 // throttle download all
+// cancel download
 
 // throttled.stream
 //     .map(ytService.downloadVideo)
