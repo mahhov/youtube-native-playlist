@@ -57,12 +57,9 @@ let init = (playlistId, downloadDirectory) => {
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
-// on click video row -> donwload that one
-// on click all button -> download all
 // catagorize downloads into directories
 // play
 // show num pending downloaded summary of statuss
-// cancel download & download all
 // throttle download all
 // cancel download
 
