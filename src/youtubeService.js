@@ -24,7 +24,7 @@ let streamPlaylistVideos = id => {
         .pluck('items')
         .flatten()
         .pluck('snippet')
-        .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title}));
+        .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title, thumbnail: snippet.thumbnails.default.url}));
 };
 
 let downloadVideo = video => {
