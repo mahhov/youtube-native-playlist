@@ -15,10 +15,3 @@ input[type=radio]:checked + label {
     color: white;
     background: darkgray;
 }
-
-.radio-group {
-    border: solid 3px gray;
-    display: inline-block;
-    border-radius: 10px;
-    overflow: hidden;
-}
