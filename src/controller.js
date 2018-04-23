@@ -57,7 +57,6 @@ let init = (playlistId, downloadDirectory) => {
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
-// filter options by downlaoded, undownloaded, all
 // on click video row -> donwload that one
 // on click all button -> download all
 // catagorize downloads into directories
