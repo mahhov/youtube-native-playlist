@@ -4,7 +4,8 @@
   "description": "online & offline youtube streaming",
   "main": "src/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "node-sass styleScss -o style && electron .",
+    "scss": "node-sass styleScss -o style"
   },
   "author": "mahhov",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "ytdl-core": "^0.20.2"
   },
   "devDependencies": {
-    "electron": "^1.8.4"
+    "electron": "^1.8.4",
+    "node-sass": "^4.8.3"
   }
 }
