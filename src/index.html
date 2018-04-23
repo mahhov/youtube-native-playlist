@@ -1,14 +1,22 @@
 <h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
 
-<button onclick="${downloadAll()}">download</button>
+<div>
+    <input type="radio" name="filter" onchange="${setFilterAll()}">all
+    <input type="radio" name="filter" onchange="${setFilterDownloaded()}">downloaded
+    <input type="radio" name="filter" onchange="${setFilterUndownloaded()}">undownloaded
+    <input type="radio" name="filter" onchange="${setFilterDownloading()}">downloading
+</div>
+
+<div>
+    <button onclick="${downloadAll()}">download</button>
+</div>
 
 <hr>
 
-<div class="section" bind-for="video in videos.outValues">
+<div class="section" bind-for="video in videos.outValues" bind-if="$e{showVideo(video)}">
     <div>$s{video.title} - $s{video.id}</div>
-    <div bind-if="video.downloaded">Already Downloaded</div>
     <div bind="video.status"></div>
-    <button bind-if="$e{showDownload(video.status)}" onclick="${download(video)}">download</button>
+    <button bind-if="$e{showDownload(video)}" onclick="${download(video)}">download</button>
 </div>
 
 <style>

@@ -28,9 +28,9 @@ let streamPlaylistVideos = id => {
 };
 
 let downloadVideo = video => {
-    try {
-        let promiseWrap = promiseCreator();
+    let promiseWrap = promiseCreator();
 
+    try {
         fs.existsSync('downloads') || fs.mkdirSync('downloads');
 
         let stream = ytRepo.getVideoStream(video.id);
@@ -69,11 +69,12 @@ let downloadVideo = video => {
             promiseWrap.resolve();
         });
 
-        return promiseWrap.promise;
     } catch (e) {
+        promiseWrap.reject();
         video.status = 'failed to download';
         console.log('video not downloaded', video.id, video.title, e);
     }
+    return promiseWrap.promise;
 };
 
 module.exports = {playlistLength, streamPlaylistVideos, downloadVideo};
