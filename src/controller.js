@@ -16,8 +16,9 @@ source.setFilterDownloaded = () => source.showFilter = [State.DOWNLOADED];
 source.setFilterUndownloaded = () => source.showFilter = [State.UNDOWNLOADED, State.DOWNLOADING];
 source.setFilterDownloading = () => source.showFilter = [State.DOWNLOADING];
 
-source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showVideo = video => source.showFilter.includes(video.state);
+source.showDownload = video => video.state === State.UNDOWNLOADED;
+source.showPlay = video => video.state === State.DOWNLOADED;
 
 source.download = video => {
     video.status = 'download pending';
@@ -31,6 +32,8 @@ source.downloadAll = () =>
     source.videos
         .filter(video => video.state === State.UNDOWNLOADED)
         .each(source.download);
+
+source.play = video => source.playVideo = video;
 
 let init = (playlistId, downloadDirectory) => {
     ytService.playlistLength(playlistId)
@@ -62,6 +65,15 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // show num pending downloaded summary of statuss
 // throttle download all
 // cancel download
+// styling for radio buttons
+
+// yt link
+// show count per filter
+// tabs per playlist
+// notifications on track change & download
+// global key shortcuts
+// homepage for playing downloaded
+// audio visualization
 
 // throttled.stream
 //     .map(ytService.downloadVideo)
