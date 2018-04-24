@@ -29,6 +29,7 @@
     <div bind="video.status"></div>
     <button bind-if="$e{showPlay(video)}" onclick="${play(video)}">play</button>
     <button bind-if="$e{showDownload(video)}" onclick="${download(video)}">download</button>
+    <button onclick="${youtubeLink(video)}">youtube</button>
 </div>
 
 <link rel="stylesheet" type="text/css" href="../style/radio.css"/>

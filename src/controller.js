@@ -11,14 +11,20 @@ let State = {
     DOWNLOADED: 2
 };
 
+// filters
+
 source.setFilterAll = () => source.showFilter = [State.UNDOWNLOADED, State.DOWNLOADING, State.DOWNLOADED];
 source.setFilterDownloaded = () => source.showFilter = [State.DOWNLOADED];
 source.setFilterUndownloaded = () => source.showFilter = [State.UNDOWNLOADED, State.DOWNLOADING];
 source.setFilterDownloading = () => source.showFilter = [State.DOWNLOADING];
 
+// show buttons
+
 source.showVideo = video => source.showFilter.includes(video.state);
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
+
+// button handlers
 
 source.download = video => {
     video.status = 'download pending';
@@ -34,6 +40,13 @@ source.downloadAll = () =>
         .each(source.download);
 
 source.play = video => source.playVideo = video;
+
+source.youtubeLink = video => {
+    let link = `https://www.youtube.com/watch?v=${video.id}`;
+    window.open(link);
+};
+
+// init
 
 let init = (playlistId, downloadDirectory) => {
     ytService.playlistLength(playlistId)
@@ -67,7 +80,6 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // cancel download
 // styling for radio buttons
 
-// yt link
 // show count per filter
 // tabs per playlist
 // notifications on track change & download
