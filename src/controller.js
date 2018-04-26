@@ -20,7 +20,7 @@ source.setFilterDownloading = () => source.showFilter = [State.DOWNLOADING];
 
 // show buttons
 
-source.showVideo = video => source.showFilter.includes(video.state);
+source.showVideo = (video, filter) => filter.includes(video.state);
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
 

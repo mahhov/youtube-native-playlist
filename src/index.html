@@ -23,7 +23,7 @@
     <audio src="../downloads/${playVideo.id}.webm" controls="" autoplay="" src="../downloads/ss6CAIGpoko.webm" type="audio/webm"></audio>
 </div>
 
-<div class="section" bind-for="video in videos.outValues" bind-if="$e{showVideo(video)}">
+<div class="section" bind-for="video in videos.outValues" bind-if="$e{showVideo(video, showFilter)}">
     <!--<img src="${video.thumbnail}" width="100px"/>-->
     <div>$s{video.title} - $s{video.id}</div>
     <div bind="video.status"></div>
@@ -34,7 +34,8 @@
 
 <link rel="stylesheet" type="text/css" href="../style/radio.css"/>
 <link rel="stylesheet" type="text/css" href="../style/button.css"/>
-<!--extract inline styling-->
+
+<!--todo extract inline styling-->
 <style>
     .section {
         margin-bottom: 20px;
