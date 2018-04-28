@@ -5,22 +5,41 @@ const fileService = require('./fileService');
 
 window.source = source;
 
+source.downloads = $tream();
+source.videos = $tream();
+source.videosFilteredAll = $tream();
+source.videosFilteredDownloaded = $tream();
+source.videosFilteredUndownloaded = $tream();
+source.videosFilteredDownloading = $tream();
+
 let State = {
     UNDOWNLOADED: 0,
     DOWNLOADING: 1,
     DOWNLOADED: 2
 };
 
-// filters
+// filter buttons
 
-source.setFilterAll = () => source.showFilter = [State.UNDOWNLOADED, State.DOWNLOADING, State.DOWNLOADED];
-source.setFilterDownloaded = () => source.showFilter = [State.DOWNLOADED];
-source.setFilterUndownloaded = () => source.showFilter = [State.UNDOWNLOADED, State.DOWNLOADING];
-source.setFilterDownloading = () => source.showFilter = [State.DOWNLOADING];
+source.setFilterAll = () => {
+    source.filteredVideos = $tream();
+    source.videosFilteredAll.to(source.filteredVideos);
+    // source.filteredVideos = source.videosFilteredAll;
+};
+source.setFilterDownloaded = () => {
+    source.filteredVideos = $tream();
+    source.videosFilteredDownloaded.to(source.filteredVideos);
+};
+source.setFilterUndownloaded = () => {
+    source.filteredVideos = $tream();
+    source.videosFilteredUndownloaded.to(source.filteredVideos);
+};
+source.setFilterDownloading = () => {
+    source.filteredVideos = $tream();
+    source.videosFilteredDownloading.to(source.filteredVideos);
+};
 
-// show buttons
+// show
 
-source.showVideo = (video, filter) => filter.includes(video.state);
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
 
@@ -52,13 +71,9 @@ let init = (playlistId, downloadDirectory) => {
     ytService.playlistLength(playlistId)
         .each(length => source.videoCount = length);
 
-    source.downloads = $tream();
-    fileService.walk(downloadDirectory)
-        .to(source.downloads);
+    source.downloads = fileService.walk(downloadDirectory);
 
-    source.videos = $tream();
-    ytService.streamPlaylistVideos(playlistId)
-        .to(source.videos);
+    source.videos = ytService.streamPlaylistVideos(playlistId);
 
     source.videos
         .each(video => video.state = State.UNDOWNLOADED)
@@ -67,7 +82,31 @@ let init = (playlistId, downloadDirectory) => {
             video.state = State.DOWNLOADED;
         });
 
+    initFilteredVideos();
+
     source.setFilterAll();
+};
+
+let initFilteredVideos = () => {
+    let videosFilterAll = [State.UNDOWNLOADED, State.DOWNLOADING, State.DOWNLOADED];
+    let videosFilterDownloaded = [State.DOWNLOADED];
+    let videosFilterUndownloaded = [State.UNDOWNLOADED, State.DOWNLOADING];
+    let videosFilterDownloading = [State.DOWNLOADING];
+
+    let createVideoFilter = filter => video => filter.includes(video.state);
+
+    source.videos
+        .filter(createVideoFilter(videosFilterAll))
+        .to(source.videosFilteredAll);
+    source.videos
+        .filter(createVideoFilter(videosFilterDownloaded))
+        .to(source.videosFilteredDownloaded);
+    source.videos
+        .filter(createVideoFilter(videosFilterUndownloaded))
+        .to(source.videosFilteredUndownloaded);
+    source.videos
+        .filter(createVideoFilter(videosFilterDownloading))
+        .to(source.videosFilteredDownloading);
 };
 
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
@@ -80,7 +119,6 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // cancel download
 // styling for radio buttons
 
-// show count per filter
 // tabs per playlist
 // notifications on track change & download
 // global key shortcuts

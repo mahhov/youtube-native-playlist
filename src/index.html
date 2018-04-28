@@ -1,17 +1,17 @@
-<h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
+<h4>Loaded $s{videos.length} of $s{videoCount} videos</h4>
 
 <div class="radio-group">
     <input type="radio" id="allFilter" name="filter" onchange="${setFilterAll()}" checked>
-    <label for="allFilter">all</label>
+    <label for="allFilter">all [$s{videosFilteredAll.outValues.length}]</label>
 
     <input type="radio" id="downloadedFilter" name="filter" onchange="${setFilterDownloaded()}">
-    <label for="downloadedFilter">downloaded</label>
+    <label for="downloadedFilter">downloaded [$s{videosFilteredDownloaded.outValues.length}]</label>
 
     <input type="radio" id="undownloadedFilter" name="filter" onchange="${setFilterUndownloaded()}">
-    <label for="undownloadedFilter">undownloaded</label>
+    <label for="undownloadedFilter">undownloaded [$s{videosFilteredUndownloaded.outValues.length}]</label>
 
     <input type="radio" id="downloadingFilter" name="filter" onchange="${setFilterDownloading()}">
-    <label for="downloadingFilter">downloading</label>
+    <label for="downloadingFilter">downloading [$s{videosFilteredDownloading.outValues.length}]</label>
 </div>
 
 <div>
@@ -23,7 +23,7 @@
     <audio src="../downloads/${playVideo.id}.webm" controls="" autoplay="" src="../downloads/ss6CAIGpoko.webm" type="audio/webm"></audio>
 </div>
 
-<div class="section" bind-for="video in videos.outValues" bind-if="$e{showVideo(video, showFilter)}">
+<div class="section" bind-for="video in filteredVideos.outValues">
     <!--<img src="${video.thumbnail}" width="100px"/>-->
     <div>$s{video.title} - $s{video.id}</div>
     <div bind="video.status"></div>
