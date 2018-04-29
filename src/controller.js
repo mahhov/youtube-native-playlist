@@ -89,21 +89,19 @@ let initFilters = () => {
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
-// catagorize downloads into directories
-// play
-// show num pending downloaded summary of statuss
-// throttle download all
-// cancel download
+// play all
 // styling for radio buttons
 // sticky filter tabs at top
-// filter tabs and filter views to update
-
-// tabs per playlist
-// notifications on track change & download
 // global key shortcuts
-// homepage for playing downloaded
-// audio visualization
+// notifications on track change & download
 // setting for auto-downloading, showing thumbnails, and shuffle playing
+// audio visualization
+// homepage for playing downloaded
+// catagorize downloads into directories
+// throttle download all
+// cancel download
+// tabs per playlist
+
 
 // throttled.stream
 //     .map(ytService.downloadVideo)
