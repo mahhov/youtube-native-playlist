@@ -18,30 +18,12 @@ let State = {
     DOWNLOADED: 2
 };
 
-// filter buttons
-
-source.setFilterAll = () => {
-    source.filteredVideos = $tream();
-    source.videosFilteredAll.to(source.filteredVideos);
-    // source.filteredVideos = source.videosFilteredAll;
-};
-source.setFilterDownloaded = () => {
-    source.filteredVideos = $tream();
-    source.videosFilteredDownloaded.to(source.filteredVideos);
-};
-source.setFilterUndownloaded = () => {
-    source.filteredVideos = $tream();
-    source.videosFilteredUndownloaded.to(source.filteredVideos);
-};
-source.setFilterDownloading = () => {
-    source.filteredVideos = $tream();
-    source.videosFilteredDownloading.to(source.filteredVideos);
-};
-
 // show
 
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
+source.setFilter = filter => source.filter = filter;
+source.showVideo = (video, filter) => filter(video);
 
 // button handlers
 
@@ -85,7 +67,7 @@ let init = (playlistId, downloadDirectory) => {
 
     initFilters();
 
-    source.setFilterAll();
+    source.setFilter(source.filters.all);
 };
 
 let initFilters = () => {
@@ -121,6 +103,7 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // global key shortcuts
 // homepage for playing downloaded
 // audio visualization
+// setting for auto-downloading, showing thumbnails, and shuffle playing
 
 // throttled.stream
 //     .map(ytService.downloadVideo)
