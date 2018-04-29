@@ -73,7 +73,8 @@ let init = (playlistId, downloadDirectory) => {
 
     source.downloads = fileService.walk(downloadDirectory);
 
-    source.videos = ytService.streamPlaylistVideos(playlistId);
+    source.videos = $tream();
+    ytService.streamPlaylistVideos(playlistId).to(source.videos);
 
     source.videos
         .each(video => video.state = State.UNDOWNLOADED)
@@ -82,31 +83,25 @@ let init = (playlistId, downloadDirectory) => {
             video.state = State.DOWNLOADED;
         });
 
-    initFilteredVideos();
+    initFilters();
 
     source.setFilterAll();
 };
 
-let initFilteredVideos = () => {
-    let videosFilterAll = [State.UNDOWNLOADED, State.DOWNLOADING, State.DOWNLOADED];
-    let videosFilterDownloaded = [State.DOWNLOADED];
-    let videosFilterUndownloaded = [State.UNDOWNLOADED, State.DOWNLOADING];
-    let videosFilterDownloading = [State.DOWNLOADING];
-
+let initFilters = () => {
+    let filterGroups = {
+        all: [State.UNDOWNLOADED, State.DOWNLOADING, State.DOWNLOADED],
+        downloaded: [State.DOWNLOADED],
+        undownloaded: [State.UNDOWNLOADED, State.DOWNLOADING],
+        downloading: [State.DOWNLOADING]
+    };
     let createVideoFilter = filter => video => filter.includes(video.state);
+    source.filters = {};
+    Object.entries(filterGroups).forEach(([key, value]) => {
+        source.filters[key] = createVideoFilter(value);
+    });
 
-    source.videos
-        .filter(createVideoFilter(videosFilterAll))
-        .to(source.videosFilteredAll);
-    source.videos
-        .filter(createVideoFilter(videosFilterDownloaded))
-        .to(source.videosFilteredDownloaded);
-    source.videos
-        .filter(createVideoFilter(videosFilterUndownloaded))
-        .to(source.videosFilteredUndownloaded);
-    source.videos
-        .filter(createVideoFilter(videosFilterDownloading))
-        .to(source.videosFilteredDownloading);
+    source.getFilterCount = (videos, filter) => videos.outValues.filter(filter).length;
 };
 
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
@@ -118,6 +113,8 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 // throttle download all
 // cancel download
 // styling for radio buttons
+// sticky filter tabs at top
+// filter tabs and filter views to update
 
 // tabs per playlist
 // notifications on track change & download
