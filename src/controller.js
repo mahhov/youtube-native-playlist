@@ -18,14 +18,14 @@ let State = {
     DOWNLOADED: 2
 };
 
-// show
+// visibility
 
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
 source.setFilter = filter => source.filter = filter;
 source.showVideo = (video, filter) => filter(video);
 
-// button handlers
+// downlaoding
 
 source.download = video => {
     video.status = 'download pending';
@@ -40,7 +40,28 @@ source.downloadAll = () =>
         .filter(video => video.state === State.UNDOWNLOADED)
         .each(source.download);
 
-source.play = video => source.playVideo = video;
+// playing
+
+let playMultiple;
+
+source.playOne = video => {
+    playMultiple = false;
+    source.playVideo = video;
+};
+
+source.playAll = () => {
+    playMultiple = true;
+    source.nextVideo();
+};
+
+source.nextVideo = () => {
+    if (!playMultiple)
+        return;
+
+    let x = source.videos.filter(source.filters.downloaded).outValues;
+    let y = parseInt(Math.random() * x.length);
+    source.playVideo = x[y];
+};
 
 source.youtubeLink = video => {
     let link = `https://www.youtube.com/watch?v=${video.id}`;
