@@ -10,13 +10,13 @@
     <label for="allFilter">all [$s{videos.outValues.length}]</label>
 
     <input type="radio" id="downloadedFilter" name="filter" onchange="${setFilter(filters.downloaded)}">
-    <label for="downloadedFilter">downloaded [$s{getFilterCount(videos, filters.downloaded)}]</label>
+    <label for="downloadedFilter">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
 
     <input type="radio" id="undownloadedFilter" name="filter" onchange="${setFilter(filters.undownloaded)}">
-    <label for="undownloadedFilter">undownloaded [$s{getFilterCount(videos, filters.undownloaded)}]</label>
+    <label for="undownloadedFilter">undownloaded [$s{getFilterCount(videos.outValues, filters.undownloaded)}]</label>
 
     <input type="radio" id="downloadingFilter" name="filter" onchange="${setFilter(filters.downloading)}">
-    <label for="downloadingFilter">downloading [$s{getFilterCount(videos, filters.downloading)}]</label>
+    <label for="downloadingFilter">downloading [$s{getFilterCount(videos.outValues, filters.downloading)}]</label>
 </div>
 
 <div bind-if="playVideo">

@@ -104,7 +104,7 @@ let initFilters = () => {
         source.filters[key] = createVideoFilter(value);
     });
 
-    source.getFilterCount = (videos, filter) => videos.outValues.filter(filter).length;
+    source.getFilterCount = (videoOutValues, filter) => videoOutValues.filter(filter).length;
 };
 
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
