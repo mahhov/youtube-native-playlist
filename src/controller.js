@@ -58,9 +58,9 @@ source.nextVideo = () => {
     if (!playMultiple)
         return;
 
-    let x = source.videos.filter(source.filters.downloaded).outValues;
-    let y = parseInt(Math.random() * x.length);
-    source.playVideo = x[y];
+    let downloadedVideos = source.videos.filter(source.filters.downloaded).outValues;
+    let randomIndex = parseInt(Math.random() * downloadedVideos.length);
+    source.playVideo = downloadedVideos[randomIndex];
 };
 
 source.youtubeLink = video => {
