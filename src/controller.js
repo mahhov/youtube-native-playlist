@@ -59,9 +59,16 @@ source.nextVideo = () => {
         return;
 
     let downloadedVideos = source.videos.filter(source.filters.downloaded).outValues;
-    let randomIndex = parseInt(Math.random() * downloadedVideos.length);
-    source.playVideo = downloadedVideos[randomIndex];
+    let getRandomIndex = () => parseInt(Math.random() * downloadedVideos.length);
+    let getNextIndex = () => source.playIndex === undefined || source.playIndex === downloadedVideos.length - 1 ? 0 : source.playIndex + 1;
+    source.playIndex = source.shuffle ? getRandomIndex() : getNextIndex();
+
+    source.playVideo = downloadedVideos[source.playIndex];
 };
+
+source.setShuffle = shuffle => source.shuffle = shuffle;
+
+// youtube link
 
 source.youtubeLink = video => {
     let link = `https://www.youtube.com/watch?v=${video.id}`;
@@ -110,6 +117,7 @@ let initFilters = () => {
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
+// show indexes
 // play all
 // styling for radio buttons
 // sticky filter tabs at top

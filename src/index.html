@@ -1,27 +1,33 @@
 <h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
 
 <div>
+    <label for="shuffleCheck">shuffle</label>
+    <input id="shuffleCheck" type="checkbox" onchange="${setShuffle(this.checked)}">
+</div>
+
+<div>
     <button onclick="${downloadAll()}">download</button>
     <button onclick="${playAll()}">play all</button>
 </div>
 
 <div class="radio-group">
-    <input type="radio" id="allFilter" name="filter" onchange="${setFilter(filters.all)}" checked>
-    <label for="allFilter">all [$s{videos.outValues.length}]</label>
+    <input type="radio" id="allFilterRadio" name="filter" onchange="${setFilter(filters.all)}" checked>
+    <label for="allFilter">Radioall [$s{videos.outValues.length}]</label>
 
-    <input type="radio" id="downloadedFilter" name="filter" onchange="${setFilter(filters.downloaded)}">
-    <label for="downloadedFilter">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
+    <input type="radio" id="downloadedFilterRadio" name="filter" onchange="${setFilter(filters.downloaded)}">
+    <label for="downloadedFilterRadio">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
 
-    <input type="radio" id="undownloadedFilter" name="filter" onchange="${setFilter(filters.undownloaded)}">
-    <label for="undownloadedFilter">undownloaded [$s{getFilterCount(videos.outValues, filters.undownloaded)}]</label>
+    <input type="radio" id="undownloadedFilterRadio" name="filter" onchange="${setFilter(filters.undownloaded)}">
+    <label for="undownloadedFilterRadio">undownloaded [$s{getFilterCount(videos.outValues, filters.undownloaded)}]</label>
 
-    <input type="radio" id="downloadingFilter" name="filter" onchange="${setFilter(filters.downloading)}">
-    <label for="downloadingFilter">downloading [$s{getFilterCount(videos.outValues, filters.downloading)}]</label>
+    <input type="radio" id="downloadingFilterRadio" name="filter" onchange="${setFilter(filters.downloading)}">
+    <label for="downloadingFilterRadio">downloading [$s{getFilterCount(videos.outValues, filters.downloading)}]</label>
 </div>
 
 <div bind-if="playVideo">
+    <!--$s{playIndex}-->
     <div>$s{playVideo.title} - $s{playVideo.id}</div>
-    <audio src="../downloads/${playVideo.id}.webm" controls="" autoplay="" type="audio/webm" onended="${nextVideo()}"></audio>
+    <audio src="../downloads/${playVideo.id}.webm" controls autoplay type="audio/webm" onended="${nextVideo()}"></audio>
 </div>
 
 <div class="section" bind-for="video in videos.outValues" bind-if="showVideo(video, filter, videos.outValues)">
