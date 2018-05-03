@@ -5,14 +5,14 @@
   "main": "src/index.js",
   "scripts": {
     "start": "npm run scss && electron .",
-    "scss": "node-sass styleScss/main.scss -o style",
+    "scss": "node-sass styleScss/style.scss -o style",
     "update": "npm rm -S bb-better-binding && npm i -S bb-better-binding"
   },
   "author": "mahhov",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "bb-better-binding": "^3.0.0",
+    "bb-better-binding": "^4.0.0",
     "bm-better-memoization": "0.0.1",
     "bs-better-stream": "^0.6.0",
     "ytdl-core": "^0.20.2"
