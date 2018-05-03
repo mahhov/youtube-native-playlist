@@ -4,8 +4,8 @@
   "description": "online & offline youtube streaming",
   "main": "src/index.js",
   "scripts": {
-    "start": "node-sass styleScss -o style && electron .",
-    "scss": "node-sass styleScss -o style",
+    "start": "npm run scss && electron .",
+    "scss": "node-sass styleScss/main.scss -o style",
     "update": "npm rm -S bb-better-binding && npm i -S bb-better-binding"
   },
   "author": "mahhov",

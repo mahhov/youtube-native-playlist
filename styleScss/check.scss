@@ -1,8 +1,8 @@
-input[type=radio] {
+input[type=checkbox] {
   display: none;
 }
 
-label {
+label[type=checkbox] {
   color: darkgray;
   background: white;
   display: inline-block;
@@ -11,7 +11,7 @@ label {
   padding: 5px 20px;
 }
 
-input[type=radio]:checked + label {
+input[type=checkbox]:checked + label {
   color: white;
   background: darkgray;
 }
