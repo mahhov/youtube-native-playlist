@@ -119,7 +119,6 @@ init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be 
 
 // todo
 // styling for radio buttons
-// sticky filter tabs at top
 // global key shortcuts
 // notifications on track change & download
 // setting for auto-downloading, showing thumbnails, and shuffle playing

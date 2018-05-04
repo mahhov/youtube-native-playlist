@@ -1,53 +1,50 @@
-<h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
+<body>
+    <div class="header">
+        <h4>Loaded $s{videos.outValues.length} of $s{videoCount} videos</h4>
 
-<div>
-    <input id="shuffleCheck" type="checkbox" onchange="${setShuffle(this.checked)}">
-    <label for="shuffleCheck">shuffle</label>
-</div>
+        <div>
+            <input id="shuffleCheck" type="checkbox" onchange="${setShuffle(this.checked)}">
+            <label for="shuffleCheck">shuffle</label>
+        </div>
 
-<div>
-    <button onclick="${downloadAll()}">download</button>
-    <button onclick="${playAll()}">play all</button>
-</div>
+        <div>
+            <button onclick="${downloadAll()}">download</button>
+            <button onclick="${playAll()}">play all</button>
+        </div>
 
-<div class="radio-group">
-    <input type="radio" id="allFilterRadio" name="filter" onchange="${setFilter(filters.all)}" checked>
-    <label for="allFilterRadio">all [$s{videos.outValues.length}]</label>
+        <div class="radio-group">
+            <input type="radio" id="allFilterRadio" name="filter" onchange="${setFilter(filters.all)}" checked>
+            <label for="allFilterRadio">all [$s{videos.outValues.length}]</label>
 
-    <input type="radio" id="downloadedFilterRadio" name="filter" onchange="${setFilter(filters.downloaded)}">
-    <label for="downloadedFilterRadio">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
+            <input type="radio" id="downloadedFilterRadio" name="filter" onchange="${setFilter(filters.downloaded)}">
+            <label for="downloadedFilterRadio">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
 
-    <input type="radio" id="undownloadedFilterRadio" name="filter" onchange="${setFilter(filters.undownloaded)}">
-    <label for="undownloadedFilterRadio">undownloaded [$s{getFilterCount(videos.outValues, filters.undownloaded)}]</label>
+            <input type="radio" id="undownloadedFilterRadio" name="filter" onchange="${setFilter(filters.undownloaded)}">
+            <label for="undownloadedFilterRadio">undownloaded [$s{getFilterCount(videos.outValues, filters.undownloaded)}]</label>
 
-    <input type="radio" id="downloadingFilterRadio" name="filter" onchange="${setFilter(filters.downloading)}">
-    <label for="downloadingFilterRadio">downloading [$s{getFilterCount(videos.outValues, filters.downloading)}]</label>
-</div>
+            <input type="radio" id="downloadingFilterRadio" name="filter" onchange="${setFilter(filters.downloading)}">
+            <label for="downloadingFilterRadio">downloading [$s{getFilterCount(videos.outValues, filters.downloading)}]</label>
+        </div>
+    </div>
 
-<div bind-if="playVideo">
-    <!--$s{playIndex}-->
-    <div>$s{playVideo.title} - $s{playVideo.id}</div>
-    <audio src="../downloads/${playVideo.id}.webm" controls autoplay type="audio/webm" onended="${nextVideo()}"></audio>
-</div>
+    <div bind-if="playVideo">
+        <!--$s{playIndex}-->
+        <div>$s{playVideo.title} - $s{playVideo.id}</div>
+        <audio src="../downloads/${playVideo.id}.webm" controls autoplay type="audio/webm" onended="${nextVideo()}"></audio>
+    </div>
 
-<div class="section" bind-for="video in videos.outValues" bind-if="showVideo(video, filter, videos.outValues)">
-    <!--<img src="${video.thumbnail}" width="100px"/>-->
-    <div>$s{video.number}</div>
-    <div>$s{video.title} - $s{video.id}</div>
-    <div bind="video.status"></div>
-    <button bind-if="showPlay(video)" onclick="${playOne(video)}">play</button>
-    <button bind-if="showDownload(video)" onclick="${download(video)}">download</button>
-    <button onclick="${youtubeLink(video)}">youtube</button>
-</div>
+    <div class="section" bind-for="video in videos.outValues" bind-if="showVideo(video, filter, videos.outValues)">
+        <!--<img src="${video.thumbnail}" width="100px"/>-->
+        <div>$s{video.number}</div>
+        <div>$s{video.title} - $s{video.id}</div>
+        <div bind="video.status"></div>
+        <button bind-if="showPlay(video)" onclick="${playOne(video)}">play</button>
+        <button bind-if="showDownload(video)" onclick="${download(video)}">download</button>
+        <button onclick="${youtubeLink(video)}">youtube</button>
+    </div>
+</body>
 
 <link rel="stylesheet" type="text/css" href="../style/style.css"/>
-
-<!--todo extract inline styling-->
-<style>
-    .section {
-        margin-bottom: 20px;
-    }
-</style>
 
 <script>
     require('./controller');
