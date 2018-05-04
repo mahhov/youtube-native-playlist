@@ -12,7 +12,7 @@
 
 <div class="radio-group">
     <input type="radio" id="allFilterRadio" name="filter" onchange="${setFilter(filters.all)}" checked>
-    <label for="allFilter">Radioall [$s{videos.outValues.length}]</label>
+    <label for="allFilterRadio">all [$s{videos.outValues.length}]</label>
 
     <input type="radio" id="downloadedFilterRadio" name="filter" onchange="${setFilter(filters.downloaded)}">
     <label for="downloadedFilterRadio">downloaded [$s{getFilterCount(videos.outValues, filters.downloaded)}]</label>
@@ -32,6 +32,7 @@
 
 <div class="section" bind-for="video in videos.outValues" bind-if="showVideo(video, filter, videos.outValues)">
     <!--<img src="${video.thumbnail}" width="100px"/>-->
+    <div>$s{video.number}</div>
     <div>$s{video.title} - $s{video.id}</div>
     <div bind="video.status"></div>
     <button bind-if="showPlay(video)" onclick="${playOne(video)}">play</button>

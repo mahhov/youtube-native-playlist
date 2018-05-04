@@ -87,7 +87,8 @@ let init = (playlistId, downloadDirectory) => {
     ytService.streamPlaylistVideos(playlistId).to(source.videos);
 
     source.videos
-        .each(video => video.state = State.UNDOWNLOADED)
+        .set('state', () => State.UNDOWNLOADED)
+        .set('number', (_, number) => number)
         .productX(source.downloads, ({id}) => id, download => download.replace('.webm', ''), video => {
             video.status = 'already downloaded';
             video.state = State.DOWNLOADED;
