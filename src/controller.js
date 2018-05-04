@@ -118,8 +118,6 @@ let initFilters = () => {
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
 // todo
-// show indexes
-// play all
 // styling for radio buttons
 // sticky filter tabs at top
 // global key shortcuts
