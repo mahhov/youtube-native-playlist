@@ -2,8 +2,7 @@ const source = require('bb-better-binding')(__dirname, document);
 const $tream = require('bs-better-stream');
 const ytService = require('./youtubeService');
 const fileService = require('./fileService');
-
-window.source = source;
+const shortcut = require('./shortcut.js');
 
 source.downloads = $tream();
 source.videos = $tream();
@@ -117,9 +116,21 @@ let initFilters = () => {
 
 init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
 
+// shortcuts
+
+shortcut.listen();
+
+shortcut.register(shortcut.Key.PLAY, () => {
+    if (!source.playVideo)
+        source.playAll();
+    else
+        source.audio.paused ? source.audio.play() : source.audio.pause();
+});
+
+shortcut.register(shortcut.Key.NEXT, source.playAll);
+
 // todo
 // styling for radio buttons
-// global key shortcuts
 // notifications on track change & download
 // setting for auto-downloading, showing thumbnails, and shuffle playing
 // audio visualization
