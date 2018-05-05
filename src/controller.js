@@ -63,6 +63,9 @@ source.nextVideo = () => {
     source.playIndex = source.shuffle ? getRandomIndex() : getNextIndex();
 
     source.playVideo = downloadedVideos[source.playIndex];
+    new Notification(source.playVideo.title, {
+        body: source.playVideo.title
+    });
 };
 
 source.setShuffle = shuffle => source.shuffle = shuffle;
@@ -131,7 +134,9 @@ shortcut.register(shortcut.Key.NEXT, source.playAll);
 
 // todo
 // styling for radio buttons
-// notifications on track change & download
+// notifications on download
+// scroll to current playing video
+// search videos
 // setting for auto-downloading, showing thumbnails, and shuffle playing
 // audio visualization
 // homepage for playing downloaded
