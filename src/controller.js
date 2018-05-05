@@ -29,9 +29,13 @@ source.showVideo = (video, filter) => filter(video);
 source.download = video => {
     video.status = 'download pending';
     video.state = State.DOWNLOADING;
-    ytService.downloadVideo(video)
-        .then(() => video.state = State.DOWNLOADED)
-        .catch(() => video.state = State.UNDOWNLOADED);
+    ytService.downloadVideo(video).then(() => {
+        video.state = State.DOWNLOADED;
+        showNotification('Downloaded', video);
+    }).catch(() => {
+        video.state = State.UNDOWNLOADED;
+        showNotification('Failed to Download', video);
+    });
 };
 
 source.downloadAll = () =>
@@ -63,9 +67,7 @@ source.nextVideo = () => {
     source.playIndex = source.shuffle ? getRandomIndex() : getNextIndex();
 
     source.playVideo = downloadedVideos[source.playIndex];
-    new Notification(source.playVideo.title, {
-        body: source.playVideo.title
-    });
+    showNotification('Now Playing', source.playVideo);
 };
 
 source.setShuffle = shuffle => source.shuffle = shuffle;
@@ -132,9 +134,14 @@ shortcut.register(shortcut.Key.PLAY, () => {
 
 shortcut.register(shortcut.Key.NEXT, source.playAll);
 
+// notification
+
+let showNotification = (title, video) => new Notification(title, {body: `${video.number}. ${video.title}`});
+
 // todo
 // styling for radio buttons
-// notifications on download
+// download notification to include # video complete & remaining
+// notifications color
 // scroll to current playing video
 // search videos
 // setting for auto-downloading, showing thumbnails, and shuffle playing
