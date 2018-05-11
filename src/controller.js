@@ -29,7 +29,7 @@ source.showVideo = (video, filter) => filter(video);
 source.download = video => {
     video.status = 'download pending';
     video.state = State.DOWNLOADING;
-    ytService.downloadVideo(video).then(() => {
+    return ytService.downloadVideo(video).then(() => {
         video.state = State.DOWNLOADED;
         showNotification('Downloaded', video);
     }).catch(() => {
@@ -38,10 +38,15 @@ source.download = video => {
     });
 };
 
-source.downloadAll = () =>
-    source.videos
+source.downloadAll = () => {
+    let throttled = source.videos
         .filter(video => video.state === State.UNDOWNLOADED)
-        .each(source.download);
+        .throttle(10);
+    throttled.stream
+        .map(source.download)
+        .wait()
+        .each(throttled.next);
+};
 
 // playing
 
@@ -119,7 +124,8 @@ let initFilters = () => {
     source.getFilterCount = (videoOutValues, filter) => videoOutValues.filter(filter).length;
 };
 
-init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads');  // todo, params to be user input
+// init('PLameShrvoeYfzOWuBX2bbER0LXD9EuxGx', 'downloads');  // todo, params to be user input
+init('PLameShrvoeYfp54xeNPK1fGxd2a7IzqU2', 'downloads'); // arm
 
 // shortcuts
 
@@ -140,6 +146,8 @@ let showNotification = (title, video) => new Notification(title, {body: `${video
 
 // todo
 // styling for radio buttons
+// prev button to restart current video
+// mini-mode with always on top option
 // download notification to include # video complete & remaining
 // notifications color
 // scroll to current playing video
@@ -151,6 +159,8 @@ let showNotification = (title, video) => new Notification(title, {body: `${video
 // throttle download all
 // cancel download
 // tabs per playlist
+// remember shuffle and settings and volume
+// stream download to tmp file, rename on completion, delete tmp files on startup
 
 
 // throttled.stream

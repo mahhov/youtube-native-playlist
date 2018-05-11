@@ -17,18 +17,24 @@ let streamPlaylistVideos = id => {
     responses
         .pluck('nextPageToken')
         .filter(nextPage => nextPage)
-        .filterCount(1)
         .to(pages);
     pages.write('');
     return responses
         .pluck('items')
         .flatten()
         .pluck('snippet')
-        .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title, thumbnail: snippet.thumbnails.default.url}));
+        .map(snippet => ({id: snippet.resourceId.videoId, title: snippet.title, thumbnail: snippet.thumbnails && snippet.thumbnails.default.url}));
 };
 
 let downloadVideo = video => {
     let promiseWrap = promiseCreator();
+
+    let errorHandler = error => {
+        console.log('3rr', error);
+        console.log('video not downloaded', video.id, video.title);
+        video.status = 'failed to download';
+        promiseWrap.reject();
+    };
 
     try {
         fs.existsSync('downloads') || fs.mkdirSync('downloads');
@@ -47,9 +53,7 @@ let downloadVideo = video => {
         });
 
         // todo handling error
-        stream.on('error', err => {
-            console.log('3rr', err);
-        });
+        stream.on('error', errorHandler);
 
         stream.on('progress', (chunkLength, downloaded, total) => {
             let floatDownloaded = downloaded / total;
@@ -69,10 +73,8 @@ let downloadVideo = video => {
             promiseWrap.resolve();
         });
 
-    } catch (e) {
-        promiseWrap.reject();
-        video.status = 'failed to download';
-        console.log('video not downloaded', video.id, video.title, e);
+    } catch (error) {
+        errorHandler(error);
     }
     return promiseWrap.promise;
 };
