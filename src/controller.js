@@ -1,4 +1,4 @@
-const source = require('bb-better-binding')(__dirname, document);
+const source = require('bb-better-binding')().boot(document.firstElementChild, window.bbd = {});
 const $tream = require('bs-better-stream');
 const ytService = require('./youtubeService');
 const fileService = require('./fileService');
