@@ -145,7 +145,6 @@ shortcut.register(shortcut.Key.NEXT, source.playAll);
 let showNotification = (title, video) => new Notification(title, {body: `${video.number}. ${video.title}`});
 
 // todo
-// styling for radio buttons
 // prev button to restart current video
 // mini-mode with always on top option
 // download notification to include # video complete & remaining
