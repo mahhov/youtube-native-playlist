@@ -15,10 +15,10 @@
     "bb-better-binding": "^5.3.1",
     "bm-better-memoization": "0.0.1",
     "bs-better-stream": "^0.6.0",
+    "electron": "^2.0.3",
     "ytdl-core": "^0.20.2"
   },
   "devDependencies": {
-    "electron": "^1.8.4",
     "node-sass": "^4.8.3"
   }
 }
