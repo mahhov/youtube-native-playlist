@@ -22,7 +22,10 @@ let State = {
 source.showDownload = video => video.state === State.UNDOWNLOADED;
 source.showPlay = video => video.state === State.DOWNLOADED;
 source.setFilter = filter => source.filter = filter;
-source.showVideo = (video, filter) => filter(video);
+source.showVideo = (video, filter, searchFilter) => filter(video) && searchFilter(video);
+
+source.search = (searchString) =>
+	source.searchFilter = video => video.title.toLowerCase().includes(searchString.toLowerCase());
 
 // downlaoding
 
@@ -126,6 +129,8 @@ let initFilters = () => {
 	});
 
 	source.getFilterCount = (videoOutValues, filter) => videoOutValues.filter(filter).length;
+
+	source.search('');
 };
 
 // init('PLameShrvoeYfzOWuBX2bbER0LXD9EuxGx', 'downloads');  // todo, params to be user input
@@ -151,11 +156,6 @@ shortcut.register(shortcut.Key.PREV, source.rewind);
 let showNotification = (title, video) => new Notification(title, {body: `${video.number}. ${video.title}`});
 
 // todo
-// mini-mode with always on top option
-// download notification to include # video complete & remaining
-// notifications color
-// scroll to current playing video
-// search videos
 // setting for auto-downloading, showing thumbnails, and shuffle playing
 // audio visualization
 // homepage for playing downloaded
@@ -166,6 +166,12 @@ let showNotification = (title, video) => new Notification(title, {body: `${video
 // remember shuffle and settings and volume
 // stream download to tmp file, rename on completion, delete tmp files on startup
 // console perror when click play all with no downloads
+
+// minor
+// mini-mode with always on top option
+// download notification to include # video complete & remaining
+// notifications color
+// scroll to current playing video
 
 // throttled.stream
 //     .map(ytService.downloadVideo)
