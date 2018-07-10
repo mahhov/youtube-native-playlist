@@ -1,9 +1,9 @@
 const {ipcRenderer} = require('electron');
 
 let Key = {
-    PREV: 0,
-    PLAY: 1,
-    NEXT: 2
+	PREV: 0,
+	PLAY: 1,
+	NEXT: 2
 };
 
 let handlers = [];

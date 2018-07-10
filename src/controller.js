@@ -144,6 +144,8 @@ shortcut.register(shortcut.Key.PLAY, () => {
 
 shortcut.register(shortcut.Key.NEXT, source.playAll);
 
+shortcut.register(shortcut.Key.PREV, source.rewind);
+
 // notification
 
 let showNotification = (title, video) => new Notification(title, {body: `${video.number}. ${video.title}`});

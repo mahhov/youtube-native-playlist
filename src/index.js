@@ -18,7 +18,7 @@ app.on('ready', () => {
 
     window.toggleDevTools();
 
-    // globalShortcut.register('MediaPreviousTrack', () => window.send('shortcut', Key.PREV));
-    globalShortcut.register('MediaPlayPause', () => window.send('shortcut', Key.PLAY));
-    globalShortcut.register('MediaNextTrack', () => window.send('shortcut', Key.NEXT));
+	globalShortcut.register('CmdOrCtrl+,', () => window.send('shortcut', Key.PLAY));
+	globalShortcut.register('CmdOrCtrl+.', () => window.send('shortcut', Key.NEXT));
+	globalShortcut.register('CmdOrCtrl+/', () => window.send('shortcut', Key.PREV));
 });
