@@ -31,6 +31,7 @@
             <div>$s{playVideo.number}</div>
             <!--<img src="${playVideo.thumbnail}" width="100px"/>-->
             <div>$s{playVideo.title} - $s{playVideo.id}</div>
+	        <button onclick="${rewind()}">rewind</button>
             <audio bind-elem="audio" src="../downloads/${playVideo.id}.webm" controls autoplay type="audio/webm" onended="${nextVideo()}"></audio>
         </div>
     </div>
