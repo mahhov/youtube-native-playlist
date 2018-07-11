@@ -17,8 +17,8 @@ app.on('ready', () => {
 	// window.setAlwaysOnTop(true, "floating", 1);
 	// window.setContentSize(300,300);
 
+	window.setMenuBarVisibility(false);
 	window.maximize();
-
 	window.toggleDevTools();
 
 	globalShortcut.register('CmdOrCtrl+Alt+/', () => window.send('shortcut', Key.PREV));
