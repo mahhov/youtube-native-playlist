@@ -164,7 +164,6 @@ let showNotification = (title, video) => new Notification(title, {body: `${video
 // cancel download
 // tabs per playlist
 // remember shuffle and settings and volume
-// stream download to tmp file, rename on completion, delete tmp files on startup
 // console perror when click play all with no downloads
 
 // minor
