@@ -21,9 +21,9 @@ app.on('ready', () => {
 
 	window.toggleDevTools();
 
-	globalShortcut.register('CmdOrCtrl+,', () => window.send('shortcut', Key.PLAY));
-	globalShortcut.register('CmdOrCtrl+.', () => window.send('shortcut', Key.NEXT));
-	globalShortcut.register('CmdOrCtrl+/', () => window.send('shortcut', Key.PREV));
+	globalShortcut.register('CmdOrCtrl+Alt+/', () => window.send('shortcut', Key.PREV));
+	globalShortcut.register('CmdOrCtrl+Alt+,', () => window.send('shortcut', Key.PLAY));
+	globalShortcut.register('CmdOrCtrl+Alt+.', () => window.send('shortcut', Key.NEXT));
 });
 
 // ipcRenderer.on('mini', () => {
