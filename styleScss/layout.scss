@@ -1,10 +1,30 @@
 .header {
   position: sticky;
   top: 0;
-  background: white;
+  background: $background-color;
   padding-bottom: 20px
 }
 
+body {
+  margin: auto;
+  max-width: 1400px;
+}
+
 .section {
-  margin-bottom: 20px;
+  margin: 40px;
+}
+
+.tab-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.tab {
+  width: 30%;
+}
+
+.tab label {
+  display: block;
+  text-align: center;
 }
