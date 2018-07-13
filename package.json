@@ -16,6 +16,7 @@
     "bm-better-memoization": "0.0.1",
     "bs-better-stream": "^0.6.0",
     "electron": "^2.0.3",
+    "font-awesome": "^4.7.0",
     "ytdl-core": "^0.20.2"
   },
   "devDependencies": {
