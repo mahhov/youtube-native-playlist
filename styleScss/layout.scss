@@ -7,6 +7,13 @@
 
 body, button {
   font-family: Consolas, monaco, monospace;
+}
+
+body {
+  font-size: 15px;
+}
+
+.large, button, label {
   font-size: 20px;
 }
 
@@ -23,7 +30,7 @@ body {
 
 .group {
   margin-top: 40px;
-  padding: 0 10px 10px;
+  padding: 5px 10px 10px;
   color: $font-color;
   background: $element-color;
   border: 1px solid $font-color;
@@ -31,7 +38,11 @@ body {
 }
 
 .line {
-  margin-top: 10px;
+  margin-top: 5px;
+}
+
+.sub-line {
+  font-size: 15px;
 }
 
 .right {
