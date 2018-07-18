@@ -1,23 +1,12 @@
 <body>
 
 	<div class="section tab-group">
-		<div class="tab">
-			<input type="radio" id="tab1" name="tab" onchange="" checked>
-			<label for="tab1">Synchronize</label>
-		</div>
-
-		<div class="tab">
-			<input type="radio" id="tab2" name="tab" onchange="">
-			<label for="tab2">Library</label>
-		</div>
-
-		<div class="tab">
-			<input type="radio" id="tab3" name="tab" onchange="">
-			<label for="tab3">Play</label>
-		</div>
+		<div class="tab" bind-block="tab with 'Synchronize', setSelectedTab"></div>
+		<div class="tab" bind-block="tab with 'Library', setSelectedTab"></div>
+		<div class="tab" bind-block="tab with 'Play', setSelectedTab"></div>
 	</div>
 
-	<div class="section" bind-if="false">
+	<div class="section" bind-if="=(selectedTab, 'synchronize')">
 		<div class="line">
 			<button onclick="">Fetch All</button>
 			<button onclick="">Download All</button>
@@ -65,7 +54,7 @@
 		<!--todo: undo for recently deleted-->
 	</div>
 
-	<div class="section" bind-if="">
+	<div class="section" bind-if="=(selectedTab, 'library')">
 		<div class="line">
 			<input style="width: 100%"/>
 		</div>
@@ -93,7 +82,7 @@
 		</div>
 	</div>
 
-	<div class="section">
+	<div class="section" bind-if="=(selectedTab, 'play')">
 		<div class="group">
 			<div class="line large">
 				<audio bind-elem="audio" src="" controls autoplay type="audio/webm" onended=""></audio>
