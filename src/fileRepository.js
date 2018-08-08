@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const promiseCreator = require('./promiseCreator');
+const promiseCreator = require('./PromiseC');
 
 let readDir = dir => {
     let promiseWrap = promiseCreator();
