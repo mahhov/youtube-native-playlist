@@ -14,11 +14,16 @@
 
 		<div class="group">
 			<div class="line right">
-				<button onclick="">Add</button>
+				<button onclick="${addPlaylistId()}">Add</button>
 			</div>
 			<div class="line">
-				<input placeholder="playlist id"/>
+				<input bind-elem="playlistIdInput" placeholder="playlist id"/>
 			</div>
+		</div>
+
+		<!--<div bind-block="playlist-tile with playlist" bind-for="playlist in playlists"></div>-->
+		<div bind-for="playlist in playlists">
+			<div bind-block="playlist-tile with playlist"></div>
 		</div>
 
 		<div class="group">
