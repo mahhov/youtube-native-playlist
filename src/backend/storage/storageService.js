@@ -4,18 +4,18 @@ const mem = require('bm-better-memoization');
 const PLAYLIST_IDS_KEY = 'playlists';
 
 let getPlaylistIds = mem(() => {
-	let playlists = storageRepo.getObj(PLAYLIST_IDS_KEY);
-	return Array.isArray(playlists) ? playlists : [];
+	let ids = storageRepo.getObj(PLAYLIST_IDS_KEY);
+	return Array.isArray(ids) ? ids : [];
 });
 
 let addPlaylistId = playlistId => {
-	let playlistIds = getPlaylistIds();
-	playlistIds.push(playlistId);
-	storageRepo.setObj(PLAYLIST_IDS_KEY, playlistIds);
+	let ids = getPlaylistIds();
+	ids.push(playlistId);
+	storageRepo.setObj(PLAYLIST_IDS_KEY, ids);
 	getPlaylistIds.clear();
 };
 
 let clearPlaylistIds = () =>
 	storageRepo.setObj(PLAYLIST_IDS_KEY, []);
 
-module.exports = {getPlaylistIdsm, addPlaylistId, clearPlaylistIds};
+module.exports = {getPlaylistIds, addPlaylistId, clearPlaylistIds};
