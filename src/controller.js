@@ -14,19 +14,19 @@ source.setSelectedTab = tab =>
 
 // synchronize tab
 
-let refreshPlaylistIds = () => {
+source.refreshPlaylistIds = () => {
 	source.playlists = storage.getPlaylistIds()
 		.map(id => new Playlist(id));
 };
 
 source.addPlaylistId = () => {
 	storage.addPlaylistId(source.playlistIdInput.value);
-	refreshPlaylistIds();
+	source.refreshPlaylistIds();
 };
 
 let init = () => {
 	source.setSelectedTab('synchronize');
-	refreshPlaylistIds();
+	source.refreshPlaylistIds();
 };
 
 init();

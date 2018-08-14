@@ -1,8 +1,17 @@
-let template = require('fs').readFileSync(`${__dirname}/playlistTile.html`, 'utf8');
+const template = require('fs').readFileSync(`${__dirname}/playlistTile.html`, 'utf8');
+
+const storage = require('../backend/storage/storageService');
 
 let controller = source => {
+	// source.fetch = fetchHandler;
+	// source.download = downloadHandler;
+	source.remove = () => {
+		console.log('removed', source.playlist.id);
+		storage.removePlaylistId(source.playlist.id);
+		source.refresh();
+	};
 };
 
-let parameters = ['playlist'];
+let parameters = ['playlist', 'refresh'];
 
 module.exports = {template, controller, parameters};

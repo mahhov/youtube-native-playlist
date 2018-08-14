@@ -15,7 +15,15 @@ let addPlaylistId = playlistId => {
 	getPlaylistIds.clear();
 };
 
+let removePlaylistId = playlistId => {
+	let ids = getPlaylistIds();
+	let removeIndex = ids.findIndex(id => id !== playlistId);
+	ids.splice(removeIndex, 1);
+	storageRepo.setObj(PLAYLIST_IDS_KEY, ids);
+	getPlaylistIds.clear();
+};
+
 let clearPlaylistIds = () =>
 	storageRepo.setObj(PLAYLIST_IDS_KEY, []);
 
-module.exports = {getPlaylistIds, addPlaylistId, clearPlaylistIds};
+module.exports = {getPlaylistIds, addPlaylistId, removePlaylistId: removePlaylistId, clearPlaylistIds};
