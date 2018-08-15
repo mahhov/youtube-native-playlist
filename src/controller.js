@@ -3,9 +3,8 @@ const Playlist = require('./backend/youtube/Playlist');
 
 const bb = require('bb-better-binding')();
 bb.declareBlock('tab', require('./tab/tab'));
-bb.declareBlock('playlist-tile', require('./synchronize/palylistTile'));
-const source = bb.boot(document.firstElementChild, window.bbd = {});
-
+bb.declareBlock('playlistTile', require('./synchronize/palylistTile'));
+const source = bb.boot(document.firstElementChild, window);
 
 // tabs
 
