@@ -10,17 +10,22 @@ let getPlaylistIds = mem(() => {
 
 let addPlaylistId = playlistId => {
 	let ids = getPlaylistIds();
+	if (ids.some(id => id === playlistId))
+		return;
 	ids.push(playlistId);
 	storageRepo.setObj(PLAYLIST_IDS_KEY, ids);
 	getPlaylistIds.clear();
+	return true;
 };
 
 let removePlaylistId = playlistId => {
 	let ids = getPlaylistIds();
-	let removeIndex = ids.findIndex(id => id !== playlistId);
-	ids.splice(removeIndex, 1);
-	storageRepo.setObj(PLAYLIST_IDS_KEY, ids);
+	let modifiedIds = ids.filter(id => id !== playlistId);
+	if (modifiedIds.length === ids.length)
+		return;
+	storageRepo.setObj(PLAYLIST_IDS_KEY, modifiedIds);
 	getPlaylistIds.clear();
+	return true;
 };
 
 let clearPlaylistIds = () =>
