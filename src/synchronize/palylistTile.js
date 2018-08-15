@@ -6,9 +6,9 @@ let controller = source => {
 	// source.fetch = fetchHandler;
 	// source.download = downloadHandler;
 	source.remove = () => {
-		console.log('removed', source.playlist.id);
-		storage.removePlaylistId(source.playlist.id);
-		source.refresh();
+		console.log('removed', source.playlist.id); // todo use ui notification instead of console.log
+		if (storage.removePlaylistId(source.playlist.id))
+			source.refresh();
 	};
 };
 

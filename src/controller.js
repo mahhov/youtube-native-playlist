@@ -20,8 +20,8 @@ source.refreshPlaylistIds = () => {
 };
 
 source.addPlaylistId = () => {
-	storage.addPlaylistId(source.playlistIdInput.value);
-	source.refreshPlaylistIds();
+	if (storage.addPlaylistId(source.playlistIdInput.value))
+		source.refreshPlaylistIds();
 };
 
 let init = () => {
