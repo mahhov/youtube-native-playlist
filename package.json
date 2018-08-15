@@ -12,7 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "bb-better-binding": "^8.0.0",
+    "bb-better-binding": "^8.1.0",
     "bm-better-memoization": "^1.0.1",
     "bs-better-stream": "^0.6.0",
     "electron": "^2.0.7",
