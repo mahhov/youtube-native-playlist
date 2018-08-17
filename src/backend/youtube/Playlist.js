@@ -14,6 +14,10 @@ class Playlist {
 	setOverview_() {
 		this.getOverview_().then(overview => {
 			let playlist = overview.items[0];
+			if (!playlist) {
+				this.title = '-- no playlist with this id --'; // todo use dedicated error message
+				return;
+			}
 			this.title = playlist.snippet.title;
 			this.length = playlist.contentDetails.itemCount;
 		});
