@@ -19,8 +19,14 @@ source.refreshPlaylistIds = () => {
 };
 
 source.addPlaylistId = () => {
-	if (storage.addPlaylistId(source.playlistIdInput.value))
-		source.refreshPlaylistIds();
+	let id = source.playlistIdInput.value;
+	if (storage.addPlaylistId(id))
+		source.playlists.push(new Playlist(id));
+};
+
+source.removePlaylistId = id => {
+	if (storage.removePlaylistId(id))
+		source.playlists = source.playlists.filter(playlist => playlist.id !== id);
 };
 
 let init = () => {
