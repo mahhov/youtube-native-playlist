@@ -1,4 +1,4 @@
-const storageRepo = require('./storageRepository');
+const storageRepo = require('./storageRepo');
 const mem = require('bm-better-memoization');
 
 const PLAYLIST_IDS_KEY = 'playlists';
