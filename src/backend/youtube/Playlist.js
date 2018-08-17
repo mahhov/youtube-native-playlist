@@ -8,8 +8,15 @@ class Playlist {
 	constructor(id) {
 		this.id = id;
 		this.pageCache = {};
-		this.title = this.title_();
-		this.length_().each(length => this.length = length);
+		this.setOverview_();
+	}
+
+	setOverview_() {
+		this.getOverview_().then(overview => {
+			let playlist = overview.items[0];
+			this.title = playlist.snippet.title;
+			this.length = playlist.contentDetails.itemCount;
+		});
 	}
 
 	getVideos() {
@@ -32,14 +39,10 @@ class Playlist {
 				snippet.thumbnails && snippet.thumbnails.default.url));
 	}
 
-	title_() {
-		return 'todo';
-	}
-
-	length_() {
-		let firstPage = $tream();
-		firstPage.writePromise(this.getPage_());
-		return firstPage.pluck('pageInfo').pluck('totalResults');
+	getOverview_() {
+		return this.overviewCache = this.overviewCache ||
+			axios.get(`${apiUrl}/playlists?part=snippet,contentDetails&id=${this.id}&key=${apiKey}`)
+				.then(response => response.data)
 	}
 
 	getPage_(page = '') {
