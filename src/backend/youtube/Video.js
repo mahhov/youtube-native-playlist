@@ -1,7 +1,7 @@
 const fs = require('fs');
 const ytdl = require('ytdl-core');
 const $tream = require('bs-better-stream');
-const PromiseC = require('../../PromiseC');
+const PromiseCreator = require('../../PromiseCreator');
 const MemoryWriteStream = require('../../memoryWriteStream');
 
 class Video {
@@ -12,13 +12,13 @@ class Video {
 	}
 
 	download() {
-		let promiseWrap = new PromiseC();
+		let promise = new PromiseCreator();
 
 		let errorHandler = error => {
 			console.log('3rr', error);
 			console.log('video not downloaded', video.id, video.title);
 			video.status = 'failed to download';
-			promiseWrap.reject();
+			promise.reject();
 		};
 
 		try {
@@ -58,13 +58,13 @@ class Video {
 				let time = `${timeFormat(secondsPassed)}`;
 				video.status = `done downloading (${time})`;
 				writeStream.writeToFile(`downloads/${video.id}.webm`);
-				promiseWrap.resolve();
+				promise.resolve();
 			});
 
 		} catch (error) {
 			errorHandler(error);
 		}
-		return promiseWrap.promise;
+		return promise.promise;
 	}
 
 	getStream_() {

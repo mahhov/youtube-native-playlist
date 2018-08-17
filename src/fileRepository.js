@@ -1,25 +1,25 @@
 const fs = require('fs');
 const path = require('path');
-const promiseCreator = require('./PromiseC');
+const PromiseCreator = require('./PromiseCreator');
 
 let readDir = dir => {
-    let promiseWrap = promiseCreator();
-    fs.readdir(dir, (err, list) => {
-        err ? promiseWrap.reject(err) : promiseWrap.resolve(list);
-    });
-    return promiseWrap.promise;
+	let promise = new PromiseCreator();
+	fs.readdir(dir, (err, list) => {
+		err ? promise.reject(err) : promise.resolve(list);
+	});
+	return promise.promise;
 };
 
 let isDir = (dir, file) => {
-    let promiseWrap = promiseCreator();
-    let filePath = getPath(dir, file);
-    fs.stat(filePath, function (err, stat) {
-        err ? promiseWrap.reject(err) : promiseWrap.resolve(stat && stat.isDirectory());
-    });
-    return promiseWrap.promise;
+	let promise = new PromiseCreator();
+	let filePath = getPath(dir, file);
+	fs.stat(filePath, function (err, stat) {
+		err ? promise.reject(err) : promise.resolve(stat && stat.isDirectory());
+	});
+	return promise.promise;
 };
 
 let getPath = (dir, file) =>
-    path.resolve(dir, file);
+	path.resolve(dir, file);
 
 module.exports = {readDir, isDir, getPath};

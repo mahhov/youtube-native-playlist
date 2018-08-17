@@ -1,4 +1,4 @@
-class PromiseC {
+class PromiseCreator {
 	constructor() {
 		this.promise = new Promise((resolve, reject) => {
 			this.resolve = resolve;
@@ -7,4 +7,4 @@ class PromiseC {
 	}
 }
 
-module.exports = PromiseC;
+module.exports = PromiseCreator;
