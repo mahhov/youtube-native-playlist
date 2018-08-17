@@ -1,0 +1,47 @@
+<div class="line">
+	<button onclick="">Fetch All</button>
+	<button onclick="">Download All</button>
+</div>
+
+<div class="group">
+	<div class="line right">
+		<button onclick="${addPlaylistId()}">Add</button>
+	</div>
+	<div class="line">
+		<input bind-elem="playlistIdInput" placeholder="playlist id"/>
+	</div>
+</div>
+
+<div bind-for="playlist in playlists" bind-block="playlistTile with playlist, removePlaylistId"></div>
+
+<div class="group">
+	<div class="line right">
+		<button onclick="">Fetch</button>
+		<button onclick="">Remove</button>
+	</div>
+	<div class="line large">New Muzik</div>
+	<div class="line">fasfjasdf8asefaelfdsa9f</div>
+</div>
+
+<div class="group">
+	<div class="line right">
+		<button onclick="">Fetch</button>
+		<button onclick="">Download</button>
+		<button onclick="">Remove</button>
+	</div>
+	<div class="line large">Top pop</div>
+	<div class="line">fasfjasdf8asefaelfdsa9f</div>
+	<div class="line"><span>20</span> of <span>50</span> downloaded</div>
+</div>
+
+<div class="group">
+	<div class="line right">
+		<button onclick="">Fetch</button>
+		<button onclick="">Remove</button>
+	</div>
+	<div class="line large">Soft Metal <3</div>
+	<div class="line">fasfjasdf8asefaelfdsa9f</div>
+	<div class="line"><span>20</span> of <span>50</span> downloaded</div>
+	<div class="line">downloading... estimated 34 minutes</div>
+</div>
+<!--todo: undo for recently deleted-->
