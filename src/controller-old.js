@@ -1,6 +1,6 @@
 // const source = require('bb-better-binding')().boot(document.firstElementChild, window.bbd = {});
 // const $tream = require('bs-better-stream');
-// const ytService = require('./backend/youtube/youtubeService');
+// const ytService = require('./backend/models/youtubeService');
 // const fileService = require('./fileService');
 // const shortcut = require('./shortcut.js');
 //
@@ -84,7 +84,7 @@
 // 	source.audio.currentTime = 0;
 // };
 //
-// // youtube link
+// // models link
 //
 // source.youtubeLink = video => {
 // 	let link = `https://www.youtube.com/watch?v=${video.id}`;

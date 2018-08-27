@@ -1,5 +1,5 @@
 const axios = require('axios');
-const apiUrl = 'https://www.googleapis.com/youtube/v3';
+const apiUrl = 'https://www.googleapis.com/models/v3';
 const apiKey = 'AIzaSyAdkXuGc2f7xJg5FLTWBi2cRUhzAJD-eC0';
 const $tream = require('bs-better-stream');
 const Video = require('./Video');

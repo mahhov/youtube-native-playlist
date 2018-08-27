@@ -1,6 +1,6 @@
 const template = require('fs').readFileSync(`${__dirname}/index.html`, 'utf8');
 const storage = require('../backend/storage/storageService');
-const Playlist = require('../backend/youtube/Playlist');
+const Playlist = require('../backend/models/Playlist');
 
 let controller = source => {
 	source.refreshPlaylistIds = () => {
